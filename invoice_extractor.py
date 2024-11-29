@@ -41,10 +41,10 @@ def get_image_bytes(uploaded_image):
 def show_response():
     model = initialize_model()
 
-    # create the streamlit ui and get prompt along with image
+    # create the streamlit ui and get query along with image
     st.set_page_config("Invoice Extractor")
     st.header("Invoice Extractor")
-    # Read teh prompt in text box
+    # Read teh query in text box
     query = st.text_input("Enter your questions" ,key="query")
     # interface to upload image
     uploaded_image = st.file_uploader("Choose an image", type=["jpg", "png", "jpeg"])
