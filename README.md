@@ -1,2 +1,2 @@
 # Invoice-Extractor_gemini_chatbot
-Invoice Extractor gemini chatbot
+Invoice Extractor bot using streamlit and gemini
