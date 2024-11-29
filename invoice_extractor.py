@@ -17,8 +17,8 @@ def initialize_model(model_name="gemini-1.5-flash"):
     model = genai.GenerativeModel(model_name)
     return model
 
-def get_response(model, model_behavior, image, prompt):
-    response = model.generate_content([model_behavior, image[0], prompt])
+def get_response(model, prompt, image, query):
+    response = model.generate_content([prompt, image[0], query])
     return response.text
 
 
@@ -45,7 +45,7 @@ def show_response():
     st.set_page_config("Invoice Extractor")
     st.header("Invoice Extractor")
     # Read teh prompt in text box
-    prompt = st.text_input("Enter your prompt" ,key="prompt")
+    query = st.text_input("Enter your questions" ,key="query")
     # interface to upload image
     uploaded_image = st.file_uploader("Choose an image", type=["jpg", "png", "jpeg"])
     if uploaded_image is not None:
@@ -57,21 +57,21 @@ def show_response():
     submit = st.button("submit")
 
     # set the model behavior
-    model_behavior = """
+    prompt = """
     Your are an expert who understand invoice overall structures and has deep knowledge on it.
     We will upload the invoice image and you have to answer the question bashed on information 
     present in the invoice image.
     """
 
     # if user pressed submit button
-    if submit or prompt:
-        if len(prompt) > 0:
+    if submit or query:
+        if len(query) > 0:
             # get uploaded image file in bytes
             image_info = get_image_bytes(uploaded_image)
-            response = get_response(model, model_behavior, image_info, prompt)
+            response = get_response(model, prompt, image_info, query)
             st.write(response)
         else:
-            raise ValueError("Please Enter Valid prompt!")
+            raise ValueError("Please Enter Valid query!")
 
 
 # call the function to show response ui
